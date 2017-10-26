@@ -1,0 +1,85 @@
+.layer {
+  height: 100%;
+  padding: 100px 100px 0 50px;
+}
+
+.layer-0 {
+  color: $color3;
+
+  .layer {
+    background-color: $color1;
+  }
+
+  .sidebar {
+    li.is-active {
+      color: $color5;
+    }
+  }
+}
+
+.layer-1 {
+  color: $color1;
+
+  .layer {
+    background-color: $color2;
+  }
+
+  .header {
+    background-color: $color4;
+  }
+
+  .sidebar {
+    li.is-active {
+      color: $color4;
+    }
+  }
+}
+
+
+.layer-2 {
+  color: $color1;
+
+  .layer {
+    background-color: $color3;
+  }
+
+  .header {
+    background-color: $color5;
+  }
+
+  .sidebar {
+    li.is-active {
+      color: $color5;
+    }
+  }
+}
+
+.layer-3 {
+  color: $color3;
+
+  .layer,
+  .header {
+    background-color: $color4;
+  }
+
+  .sidebar {
+    li.is-active {
+      color: $color1;
+    }
+  }
+}
+
+.layer-4 {
+  color: $color3;
+
+  .layer,
+  .header {
+    background-color: $color5;
+  }
+
+  .sidebar {
+    li.is-active {
+      color: $color1;
+    }
+  }
+}
