@@ -1,34 +1,33 @@
-.sidebar {
+.footer {
   position: fixed;
-  right: 0;
-  top: 112px;
-  bottom: 130px;
+  bottom: 0;
+  left: 42px;
+  right: 208px;
   z-index: 9;
-  border-left: 2px solid currentColor;
-  padding-top: 50px;
-  width: 210px;
+  border-top: 2px solid currentColor;
+  height: 130px;
 
   &:before,
   &:after {
     content: '';
-    width: 2px;
-    height: 16px;
+    height: 2px;
+    width: 16px;
     background-color: currentColor;
     position: absolute;
     z-index: 2;
-    top: -3px;
-    left: 0;
+    left: -3px;
+    top: 0;
     border-radius: 2px;
   }
 
   &:before {
-    left: 3px;
-    transform: rotate(-42deg);
+    top: 3px;
+    transform: rotate(-138deg);
   }
 
   &:after {
-    left: -7px;
-    transform: rotate(42deg);
+    top: -7px;
+    transform: rotate(138deg);
   }
 
   ul {
@@ -36,20 +35,25 @@
     padding: 0;
     list-style: none;
     position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   li {
-    left: -0.6px;
-    position: relative;
+    float: right;
+    transform: rotate(270deg);
+    transform-origin: left top 0;
+    width: 40px;
+    padding: 0 36px 0 4px;
+    margin-right: 24px;
+    margin-top: 2px;
 
     &:after {
       content: '';
       position: absolute;
-      top: 13px;
-      left: -5px;
+      top: 34px;
+      left: -2px;
       width: 10px;
       height: 10px;
       border-radius: 50%;
@@ -60,14 +64,14 @@
       color: $color4;
 
       &:after {
-        left: -9px;
+        left: 5px;
         border-radius: 0;
         background-color: transparent;
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 5px 8px 5px 0;
-        border-color: transparent currentColor transparent transparent;
+        border-width: 5px 0 5px 8px;
+        border-color: transparent transparent transparent currentColor;
         transform: skew(10deg) rotate(10deg);
       }
 
@@ -123,12 +127,13 @@
     button {
       cursor: pointer;
       user-select: none;
-      top: 16px;
       position: relative;
       text-align: left;
-      width: 100%;
       padding: 7px 20px;
       transform: skew(10deg) rotate(10deg);
+      width: 130px;
+      line-height: 1.2;
+      text-align: center;
     }
   }
 }

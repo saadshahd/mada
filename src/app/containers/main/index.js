@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Parallax from 'react-springy-parallax';
 import Header from '../../components/header';
 import Sidebar from '../../components/sidebar';
+import Footer from '../../components/footer';
 
 class Main extends Component {
   state = {
@@ -67,6 +68,7 @@ class Main extends Component {
             </Parallax.Layer>
           </Parallax>
         </div>
+        <Footer />
       </div>
     );
   }

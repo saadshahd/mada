@@ -1,6 +1,6 @@
 .layer {
   height: 100%;
-  padding: 100px 100px 0 50px;
+  padding: 112px 220px 220px 60px;
 }
 
 .layer-0 {
@@ -8,12 +8,6 @@
 
   .layer {
     background-color: $color1;
-  }
-
-  .sidebar {
-    li.is-active {
-      color: $color5;
-    }
   }
 }
 
@@ -26,12 +20,6 @@
 
   .header {
     background-color: $color4;
-  }
-
-  .sidebar {
-    li.is-active {
-      color: $color4;
-    }
   }
 }
 
@@ -46,12 +34,6 @@
   .header {
     background-color: $color5;
   }
-
-  .sidebar {
-    li.is-active {
-      color: $color5;
-    }
-  }
 }
 
 .layer-3 {
@@ -61,12 +43,6 @@
   .header {
     background-color: $color4;
   }
-
-  .sidebar {
-    li.is-active {
-      color: $color1;
-    }
-  }
 }
 
 .layer-4 {
@@ -75,11 +51,5 @@
   .layer,
   .header {
     background-color: $color5;
-  }
-
-  .sidebar {
-    li.is-active {
-      color: $color1;
-    }
   }
 }
