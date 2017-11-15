@@ -1,8 +1,11 @@
+import * as R from 'ramda';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Parallax from 'react-springy-parallax';
 import Header from '../../components/header';
 import Sidebar from '../../components/sidebar';
 import Footer from '../../components/footer';
+import Chart from '../../components/chart';
 
 class Main extends Component {
   state = {
@@ -19,13 +22,20 @@ class Main extends Component {
   };
 
   render() {
+    const sidebarItems = this.props.data.stats;
+    const footerItems = R.drop(1, R.keys(this.props.data));
+
+    console.log(footerItems);
+
     return (
       <div className={`layer-${this.state.activeLayer}`}>
         <Header />
         <Sidebar
+          items={sidebarItems}
           activeLayer={this.state.activeLayer}
           scrollTo={this.handleScrollToClick}
         />
+        <Chart />
         <div
           style={{
             backgroundColor: '#333',
@@ -68,10 +78,14 @@ class Main extends Component {
             </Parallax.Layer>
           </Parallax>
         </div>
-        <Footer />
+        <Footer items={footerItems} />
       </div>
     );
   }
 }
 
-export default Main;
+const mapStateToProps = ({ data }) => ({
+  data
+});
+
+export default connect(mapStateToProps)(Main);

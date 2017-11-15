@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import React, { Component } from 'react';
 
 class Footer extends Component {
@@ -5,21 +6,11 @@ class Footer extends Component {
     return (
       <div className="footer">
         <ul>
-          <li className="is-active">
-            <button>قرار أول عرض على النيابة</button>
-          </li>
-          <li>
-            <button>خلال أسبوع حبس</button>
-          </li>
-          <li>
-            <button>خلال شهر حبس</button>
-          </li>
-          <li className="is-active">
-            <button>خلال 6 شهور حبس</button>
-          </li>
-          <li>
-            <button>خلال سنة حبس</button>
-          </li>
+          {R.addIndex(R.map)((item, idx) => (
+            <li key={item}>
+              <button>{item}</button>
+            </li>
+          ))(this.props.items)}
         </ul>
       </div>
     );

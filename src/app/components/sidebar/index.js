@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import React, { Component } from 'react';
 
 class Sidebar extends Component {
@@ -7,23 +8,11 @@ class Sidebar extends Component {
     return (
       <div className="sidebar">
         <ul>
-          <li className={this.getClassName(0)}>
-            <button onClick={this.props.scrollTo(0)}>
-              قرار أول عرض على النيابة
-            </button>
-          </li>
-          <li className={this.getClassName(1)}>
-            <button onClick={this.props.scrollTo(1)}>خلال أسبوع حبس</button>
-          </li>
-          <li className={this.getClassName(2)}>
-            <button onClick={this.props.scrollTo(2)}>خلال شهر حبس</button>
-          </li>
-          <li className={this.getClassName(3)}>
-            <button onClick={this.props.scrollTo(3)}>خلال 6 شهور حبس</button>
-          </li>
-          <li className={this.getClassName(4)}>
-            <button onClick={this.props.scrollTo(4)}>خلال سنة حبس</button>
-          </li>
+          {R.addIndex(R.map)((item, idx) => (
+            <li className={this.getClassName(idx)} key={item}>
+              <button onClick={this.props.scrollTo(idx)}>{item}</button>
+            </li>
+          ))(this.props.items)}
         </ul>
       </div>
     );
