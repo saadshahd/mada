@@ -4,7 +4,7 @@
   right: 0;
   left: 0;
   z-index: 9;
-  height: 72px;
+  height: $header-height;
 }
 
 .header__btns {
@@ -18,11 +18,11 @@
 
     &:first-child {
       border-right-width: 1px;
-      border-radius: 0 5px 5px 0;
+      // border-radius: 0 5px 5px 0;
     }
 
     &:last-child {
-      border-radius: 5px 0 0 5px;
+      // border-radius: 5px 0 0 5px;
     }
 
     &.is-active {
