@@ -1,5 +1,5 @@
 import {length, map, addIndex, flatten, values} from 'ramda';
-import {Stage, Layer, Line, Text, Arrow} from 'react-konva';
+import {Stage, Layer, Group, Line, Text, Arrow, Circle} from 'react-konva';
 import React, { Component } from 'react';
 
 const mapIndexed = addIndex(map);
@@ -57,11 +57,11 @@ const getVerticalStepPoints = ({barPoints, size, step, stepSize, margingFrac}) =
   endY: barPoints.startY - (step + margingFrac) * stepSize
 });
 
-const getStepPoints = ({barPoints, size, step, stepSize, margingFrac}) => ({
-  startX: barPoints.startX + (step + margingFrac) * stepSize,
-  startY: barPoints.startY,
-  endX: barPoints.startX + (step + margingFrac) * stepSize,
-  endY: barPoints.startY + size
+const getStepPoints = ({size, x = 0}) => ({
+  startX: x,
+  startY: 0,
+  endX: x,
+  endY: size
 });
 
 const drawVerticalBarSteps = ({steps, barPoints, size = 10, margingFrac = 0.2}) => {
@@ -90,6 +90,7 @@ const drawVerticalBarSteps = ({steps, barPoints, size = 10, margingFrac = 0.2}) 
 }
 
 const drawHorizontalBarSteps = ({steps, barPoints, size = 10, margingFrac = 0.2}) => {
+  const getX = subfactor => subfactor * stepSize;
   const count = length(steps);
   const stepSize = getBarStepSpacing({
     count,
@@ -99,26 +100,50 @@ const drawHorizontalBarSteps = ({steps, barPoints, size = 10, margingFrac = 0.2}
   });
 
   return mapIndexed((text, step) => {
-    const baseMargingFrac = 0.05;
-    const points = getStepPoints({barPoints, size: 15, margingFrac: baseMargingFrac, step, stepSize});
-    const points2 = getStepPoints({barPoints, size: 10, margingFrac: baseMargingFrac + 0.25, step, stepSize});
-    const points3 = getStepPoints({barPoints, size: 10, margingFrac: baseMargingFrac + 0.5, step, stepSize});
-    const points4 = getStepPoints({barPoints, size: 10, margingFrac: baseMargingFrac + 0.75, step, stepSize});
+    const points = getStepPoints({size: 15, x: getX(0)});
+    const points2 = getStepPoints({size: 10, x: getX(0.25)});
+    const points3 = getStepPoints({size: 10, x: getX(0.5)});
+    const points4 = getStepPoints({size: 10, x: getX(0.75)});
 
-    return [
-      <Line {...stepLineOptions} points={values(points)}/>,
-      <Line {...stepLineOptions} strokeWidth={1} points={values(points2)}/>,
-      <Line {...stepLineOptions} strokeWidth={1} points={values(points3)}/>,
-      <Line {...stepLineOptions} strokeWidth={1} points={values(points4)}/>,
-      <Text
-        {...stepTextOptions}
-        text={text}
-        x={points.startX + 8}
-        y={points.startY + 22}
-        rotation={90}
-      />
-    ];
+
+    return (
+      <Group x={barPoints.startX} y={barPoints.startY}>
+        <Group x={getX(step + margingFrac)}>
+          <Line {...stepLineOptions} points={values(points)}/>
+          <Line {...stepLineOptions} strokeWidth={1} points={values(points2)}/>
+          <Line {...stepLineOptions} strokeWidth={1} points={values(points3)}/>
+          <Line {...stepLineOptions} strokeWidth={1} points={values(points4)}/>
+          <Text
+            {...stepTextOptions}
+            text={text}
+            x={points.startX + 8}
+            y={points.startY + 22}
+            rotation={90}
+          />
+        </Group>
+      </Group>
+    );
   }, steps);
+}
+
+const drawGraphLine = xys => {
+  const points = map(({x, y}) => [x * 200, y * 100])(xys);
+  const circles = map(({x, y}) => (
+    <Circle fill="red" radius={5} x={x * 200} y={y * 100} />
+  ))(xys);
+
+  console.log(circles);
+
+  return (
+    <Group x={200} y={100}>
+      {
+        [
+          ...circles,
+          <Line {...lineOptions} points={flatten(points)}/>
+        ]
+      }
+    </Group>
+  )
 }
 
 class Chart extends Component {
@@ -138,13 +163,45 @@ class Chart extends Component {
       barPoints: verticalBarPoints
     });
 
+    const graphLine = drawGraphLine([
+      {
+        x: 1,
+        y: 1
+      },
+      {
+        x: 2,
+        y: 4
+      },
+      {
+        x: 3,
+        y: 2
+      },
+      {
+        x: 4,
+        y: 3
+      },
+      {
+        x: 5,
+        y: 1
+      },
+      {
+        x: 6,
+        y: 6
+      },
+      {
+        x: 7,
+        y: 3
+      }
+    ])
+
     return (
       <Stage width={width} height={height}>
         <Layer>
           {
             [
               ...flatten(verticalBarSteps),
-              ...flatten(horizontalBarSteps),
+              ...horizontalBarSteps,
+              graphLine,
               verticalBar,
               horizontalBar
             ]
