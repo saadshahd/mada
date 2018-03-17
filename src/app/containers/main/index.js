@@ -7,41 +7,33 @@ import Chart from '../../components/chart';
 class Main extends Component {
   state = {
     $mainRef: null,
-    $scrollRef: null,
     height: 0,
     width: 0,
-    viewHeight: 0,
-    scene: 1
+    scene: 0.01
   };
 
   getMainRef = el => {
-    this.setState({
-      $mainRef: el
-    });
+    this.setState({$mainRef: el}, this.updateBoundries);
   };
 
-  getScrollRef = el => {
-    this.setState({
-      $scrollRef: el
-    });
-  };
+  getScene = () => {
+    const scrollY = window.scrollY || 1;
 
-  getScene = (scroll = window.scrollY) => this.state.viewHeight / scroll
+    return this.state.height ? (scrollY / this.state.height) / 8 : 0;
+  }
 
   updateBoundries = () => {
     const { width, height } = this.state.$mainRef.getBoundingClientRect();
-    const viewHeight = this.state.$scrollRef.offsetHeight;
 
     this.setState({
       width,
-      height,
-      viewHeight
-    });
+      height
+    }, this.handleScroll);
   };
 
   handleScroll = () => {
     this.setState({
-      scene: this.getScene(this.scrollY)
+      scene: this.getScene()
     });
   }
 
@@ -59,9 +51,9 @@ class Main extends Component {
         <Header />
         <WindowSizeListener onResize={this.updateBoundries} />
 
-        <div ref={this.getScrollRef} style={{height: '1600vh'}}/>
+        <div style={{height: 'calc(800vh - 576px)'}}/>
         <div ref={this.getMainRef} className="main">
-          {this.state.$mainRef && (
+          {this.state.$mainRef && this.state.height && (
             <Chart width={this.state.width} height={this.state.height} scene={this.state.scene} />
           )}
         </div>

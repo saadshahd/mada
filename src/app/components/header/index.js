@@ -7,9 +7,9 @@ class Header extends Component {
         <div className="row center-md middle-md">
           <div className="col-md shrink">
             <div className="header__btns">
-              <button className="is-active">el mil</button>
-              <button>modet elhabs</button>
-              <button>magmo3 ela3mar</button>
+              <button className="is-active">الميل للحبس</button>
+              <button>مدة الحبس</button>
+              <button>مجموع العمر</button>
             </div>
           </div>
         </div>

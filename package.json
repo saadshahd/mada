@@ -18,6 +18,7 @@
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.14",
     "react-window-size-listener": "^1.2.1",
+    "recharts": "^1.0.0-beta.10",
     "redux": "^3.7.2"
   },
   "scripts": {

@@ -1,114 +1,60 @@
-import React, { Component } from 'react';
-import {range, map} from 'ramda';
-import {Line} from 'react-chartjs-2';
+import React, {Component} from 'react';
+import {LineChart, Line, YAxis, XAxis, CartesianGrid, Tooltip} from 'recharts';
 
 class Chart extends Component {
+  data = [
+    {time: '2013 Nov, Dec', value: 98.30},
+    {time: '2014 Q1', value: 98.50},
+    {time: '2014 Q2', value: 92.17},
+    {time: '2014 Q3', value: 94.97},
+    {time: '2014 Q4', value: 94.48},
+    {time: '2015 Q1', value: 98.16},
+    {time: '2015 Q2', value: 98.03},
+    {time: '2015 Q3', value: 84.50},
+    {time: '2015 Q4', value: 75.17},
+    {time: '2016 Q1', value: 87.05},
+    {time: '2016 Q2', value: 58.46},
+    {time: '2016 Q3', value: 91.53},
+    {time: '2016 Q4', value: 94.69},
+  ]
+
+  getLineRef = el => {
+    console.log(el.mainCurve);
+    this.$line = el;
+  }
+
   render() {
     const {width, height} = this.props;
-    const xLabels = range(0, 16);
-    const yLabels = map(num => `${num * 20}%`)(range(0, 6).reverse());
-    const xYears = ['2103', '2014', '2015', '2016']
-
-    const data = {
-      xLabels,
-      yLabels,
-      datasets: [{
-        data: [
-          {x: 0, y: '40%'},
-          {x: 1, y: '20%'},
-          {x: 2, y: '40%'},
-          {x: 3, y: '60%'},
-          {x: 4, y: '80%'},
-          {x: 5, y: '20%'},
-          {x: 6, y: '40%'},
-          {x: 7, y: '60%'},
-          {x: 8, y: '80%'},
-          {x: 9, y: '20%'},
-          {x: 10, y: '40%'},
-          {x: 11, y: '60%'},
-          {x: 12, y: '80%'},
-          {x: 13, y: '20%'},
-          {x: 14, y: '40%'},
-          {x: 15, y: '60%'},
-        ],
-        fill: false,
-        borderColor: 'red',
-        lineTension: 0.05
-      }]
-    };
-
-    const axesConfig = {
-      display: true,
-      gridLines: {
-        display: false,
-        lineWidth: 5,
-        color: 'red'
-      },
-      ticks: {
-        fontColor: 'green',
-        fontFamily: 'El Messiri',
-        fontSize: 24,
-        fontWeight: 500
-      }
-    };
-
-    const options = {
-      responsive: true,
-      legend: {
-        display: false
-      },
-      layout: {
-        padding: 50
-      },
-      scales: {
-        yAxes: [{
-          ...axesConfig,
-          type: 'category',
-          scaleLabel: {
-            display: true,
-            labelString: 'Total',
-            fontColor: 'green',
-            fontFamily: 'El Messiri',
-            fontSize: 24,
-            fontWeight: 500,
-          },
-          ticks: {
-            ...axesConfig.ticks,
-            reverse: true
-          }
-        }],
-        xAxes: [{
-          ...axesConfig,
-          scaleLabel: {
-            display: true,
-            labelString: 'Month',
-            fontColor: 'green',
-            fontFamily: 'El Messiri',
-            fontSize: 24,
-            fontWeight: 500,
-          },
-          ticks: {
-            ...axesConfig.ticks,
-            userCallback: label => {
-              const qNum = label % 4;
-              const isFirstQ = qNum === 0;
-
-              return isFirstQ ? xYears[label / 4] : `Q${qNum + 1}`;
-            }
-          }
-        }]
-      }
-    };
+    const chartWidth = width - 80;
+    const chartHeight = height - 80;
+    const dashoffset = chartWidth + chartHeight;
 
     console.log(this.props.scene);
 
     return (
-      <Line
-        width={width}
-        height={height}
-        data={data}
-        options={options}
-      />
+      <div style={{margin: 40}}>
+        <LineChart width={chartWidth} height={chartHeight} data={this.data}>
+          <Tooltip separator="" isAnimationActive={false}/>
+          <YAxis tickLine={false} name="Label" unit="%"/>
+          <XAxis dataKey="time" tickLine={false}/>
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
+          <Line
+            ref={this.getLineRef}
+            isAnimationActive={false}
+            strokeDasharray={`${dashoffset}`}
+            strokeDashoffset={`${dashoffset - (dashoffset * this.props.scene) - 20}`}
+            type="monotone"
+            dataKey="value"
+            stroke="#8884d8"
+            name=" "
+            unit="%"
+            dot={{
+              stroke: 'red',
+              strokeWidth: 2
+            }}
+          />
+        </LineChart>
+      </div>
     );
   }
 }
