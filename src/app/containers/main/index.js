@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import WindowSizeListener from 'react-window-size-listener';
-import Header from '../../components/header';
 import Chart from '../../components/chart';
+import Chart3 from '../../components/chart3';
 
 class Main extends Component {
   state = {
     $mainRef: null,
     height: 0,
     width: 0,
-    scene: 0.01
+    scene: 0.01,
+    tab: 1,
+    $line1Length: 0,
+    $line2Length: 0
   };
 
   getMainRef = el => {
@@ -17,9 +20,11 @@ class Main extends Component {
   };
 
   getScene = () => {
-    const scrollY = window.scrollY || 1;
+    const element = document.documentElement;
+    const scroll = element.scrollTop;
+    const height = element.scrollHeight - element.clientHeight;
 
-    return this.state.height ? (scrollY / this.state.height) / 8 : 0;
+    return (scroll / height);
   }
 
   updateBoundries = () => {
@@ -37,6 +42,10 @@ class Main extends Component {
     });
   }
 
+  setTab = tab => () => {
+    this.setState({tab});
+  }
+
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
   }
@@ -48,13 +57,27 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Header />
+        <div className="header">
+          <div className="row center-md middle-md">
+            <div className="col-md shrink">
+              <div className="header__btns">
+                <button onClick={this.setTab(1)} className={this.state.tab === 1 ? 'is-active' : ''}>الميل للحبس</button>
+                <button onClick={this.setTab(2)} className={this.state.tab === 2 ? 'is-active' : ''}>مدة الحبس</button>
+                <button onClick={this.setTab(3)} className={this.state.tab === 3 ? 'is-active' : ''}>مجموع العمر</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <WindowSizeListener onResize={this.updateBoundries} />
 
-        <div style={{height: 'calc(800vh - 576px)'}}/>
+        <div style={{height: '800vh'}}/>
         <div ref={this.getMainRef} className="main">
           {this.state.$mainRef && this.state.height && (
-            <Chart width={this.state.width} height={this.state.height} scene={this.state.scene} />
+            <div>
+              {this.state.tab === 1 && <Chart width={this.state.width} height={this.state.height} scene={this.state.scene} />}
+              {this.state.tab === 3 && <Chart3 width={this.state.width} height={this.state.height} scene={this.state.scene} />}
+            </div>
           )}
         </div>
       </div>
