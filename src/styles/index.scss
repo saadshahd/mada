@@ -2,14 +2,20 @@
 
 @import 'flexboxgrid-sass/flexboxgrid';
 @import 'normalize-scss/sass/normalize';
+@import 'wenk/dist/wenk.scss';
+@import '~rc-slider/assets/index.css';
 
 @import 'general/base';
 @import 'general/button';
 
 @import 'components/header';
 @import 'components/main';
+@import 'components/slider';
+@import 'components/circle';
 
 @import 'trumps/bg';
 @import 'trumps/color';
+@import 'trumps/d';
 @import 'trumps/w';
 @import 'trumps/h';
+@import 'trumps/align';

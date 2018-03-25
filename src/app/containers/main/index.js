@@ -10,7 +10,7 @@ class Main extends Component {
     height: 0,
     width: 0,
     scene: 0.01,
-    tab: 1,
+    tab: 3,
     $line1Length: 0,
     $line2Length: 0
   };
@@ -55,6 +55,9 @@ class Main extends Component {
   }
 
   render() {
+    const chartHeight = this.state.height - 80;
+    const chartWidth = this.state.width - 80;
+
     return (
       <div>
         <div className="header">
@@ -75,8 +78,8 @@ class Main extends Component {
         <div ref={this.getMainRef} className="main">
           {this.state.$mainRef && this.state.height && (
             <div>
-              {this.state.tab === 1 && <Chart width={this.state.width} height={this.state.height} scene={this.state.scene} />}
-              {this.state.tab === 3 && <Chart3 width={this.state.width} height={this.state.height} scene={this.state.scene} />}
+              {this.state.tab === 1 && <Chart width={chartWidth} height={chartHeight} scene={this.state.scene} />}
+              {this.state.tab === 3 && <Chart3 width={chartWidth} height={chartHeight} scene={this.state.scene} />}
             </div>
           )}
         </div>

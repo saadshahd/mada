@@ -20,6 +20,8 @@ class Chart extends Component {
   ]
 
   getAreachart = el => {
+    if (!el|| !el.container) return;
+
     const lengths = map(path => path.getTotalLength())(el.container.querySelectorAll('.recharts-area .recharts-layer path:last-child'));
 
     this.$line1Length = lengths[0];
@@ -28,14 +30,12 @@ class Chart extends Component {
 
   render() {
     const {width, height} = this.props;
-    const chartWidth = width - 80;
-    const chartHeight = height - 80;
 
     return (
       <div style={{margin: 40}}>
         <AreaChart
-          width={chartWidth}
-          height={chartHeight}
+          width={width}
+          height={height}
           data={this.data}
           ref={this.getAreachart}
         >

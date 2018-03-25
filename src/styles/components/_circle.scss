@@ -1,0 +1,19 @@
+.circle {
+  border-radius: 50%;
+  background: pink;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1;
+  font-size: 1rem;
+  color: black;
+
+  transition: all 0.3s;
+  transform: translateZ(0);
+
+  > .circle {
+    color: white;
+    background: purple;
+  }
+}
