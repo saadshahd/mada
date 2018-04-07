@@ -14,7 +14,8 @@
     "react-dom": "^16.0.0",
     "react-scripts": "1.0.14",
     "react-window-size-listener": "^1.2.1",
-    "recharts": "^1.0.0-beta.10"
+    "recharts": "^1.0.0-beta.10",
+    "wenk": "^1.0.7"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

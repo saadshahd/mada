@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {map} from 'ramda';
+import {map, addIndex} from 'ramda';
 import {AreaChart, Area, YAxis, XAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 class Chart extends Component {
@@ -18,7 +18,7 @@ class Chart extends Component {
     const $line2Length = this.$line2Length || 10000;
 
     return (
-      <div style={{margin: '10px 40px 40px 40px', direction: 'ltr'}}>
+      <div style={{margin: '0 10px 10px 10px', direction: 'ltr'}}>
         <AreaChart
           width={width}
           height={height}
@@ -42,21 +42,33 @@ class Chart extends Component {
               return payload.length !== 0 && (
                 <div className="tooltip">
                   <h4>{payload[0].payload.q}</h4>
+                  <ul>
                   {
-                    <ul>
-                      <li>
-                        <span className="tooltip-circle" style={{backgroundColor: payload[0].color}}/>
-                        <span className="tooltip-text">{payload[0].payload[payload[0].dataKey]}{this.props.label}</span>
+                    addIndex(map)((point, idx) => (
+                      <li key={idx}>
+                        <span className="tooltip-circle" style={{backgroundColor: point.color}}/>
+                        <span className="tooltip-text">{point.payload[point.dataKey]}{this.props.axis[idx].unit}</span>
                       </li>
-                    </ul>
+                    ))(payload)
+                  }
+                  </ul>
+
+                  {
+                    payload[0].payload.event && <strong style={{marginTop: 12, display: 'block'}}>{payload[0].payload.event}</strong>
                   }
                 </div>
               );
             }}
           />
           <Legend verticalAlign="top" iconType="circle" height={36}/>
-          <YAxis tickLine={false} name="Label" unit={this.props.label}/>
-          <XAxis dataKey="time" tickLine={false}/>
+          <YAxis
+            name="Label"
+            label={{value: this.props.label, angle: -90, position: 'insideLeft', offset: 10}}
+            tickMargin={5}
+            unit={this.props.axis[0].unit}
+            width={100}
+          />
+          <XAxis dataKey="time"/>
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
           <Area
             isAnimationActive={false}
@@ -67,7 +79,6 @@ class Chart extends Component {
             fillOpacity={this.props.scene}
             fill="url(#colorUv)"
             {...this.props.axis[0]}
-            unit={this.props.label}
             dot={{
               stroke: 'red',
               strokeWidth: 2
@@ -83,7 +94,6 @@ class Chart extends Component {
             fillOpacity={this.props.scene}
             fill="url(#colorPv)"
             {...this.props.axis[1]}
-            unit={this.props.label}
             dot={{
               stroke: 'yellow',
               strokeWidth: 2
