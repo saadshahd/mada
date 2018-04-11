@@ -8,6 +8,10 @@ import configureStore from './app/store/configure-store';
 
 const store = configureStore();
 
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Main />
