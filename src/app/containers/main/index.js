@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import WindowSizeListener from 'react-window-size-listener';
 import Chart from '../../components/chart';
-import Chart2 from '../../components/chart2';
 import Chart3 from '../../components/chart3';
 
 class Main extends Component {
@@ -11,7 +10,7 @@ class Main extends Component {
     height: 0,
     width: 0,
     scene: 0.01,
-    tab: 2,
+    tab: 1,
     $line1Length: 0,
     $line2Length: 0
   };
@@ -66,7 +65,6 @@ class Main extends Component {
             <div className="col-md shrink">
               <div className="header__btns">
                 <button onClick={this.setTab(1)} className={this.state.tab === 1 ? 'is-active' : ''}>الميل للحبس</button>
-                <button onClick={this.setTab(2)} className={this.state.tab === 2 ? 'is-active' : ''}>مدة الحبس</button>
                 <button onClick={this.setTab(3)} className={this.state.tab === 3 ? 'is-active' : ''}>مجموع العمر</button>
               </div>
             </div>
@@ -80,7 +78,6 @@ class Main extends Component {
           {this.state.$mainRef && this.state.height && (
             <div>
               {this.state.tab === 1 && <Chart width={chartWidth} height={chartHeight} scene={this.state.scene} />}
-              {this.state.tab === 2 && <Chart2 width={chartWidth} height={chartHeight} scene={this.state.scene} />}
               {this.state.tab === 3 && <Chart3 width={chartWidth} height={chartHeight} scene={this.state.scene} />}
             </div>
           )}
