@@ -25,16 +25,6 @@ class Chart extends Component {
           data={this.props.data}
           ref={this.getAreachart}
         >
-          <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#8884d8" stopOpacity={1}/>
-              <stop offset="95%" stopColor="#8884d8" stopOpacity={0.2}/>
-            </linearGradient>
-            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#82ca9d" stopOpacity={1}/>
-              <stop offset="95%" stopColor="#82ca9d" stopOpacity={0.2}/>
-            </linearGradient>
-          </defs>
           <Tooltip
             separator=""
             isAnimationActive={false}
@@ -75,12 +65,12 @@ class Chart extends Component {
             strokeDasharray={`${$line1Length}`}
             strokeDashoffset={`${$line1Length - ($line1Length * this.props.scene)}`}
             type="monotone"
-            stroke="#8884d8"
-            fillOpacity={this.props.scene}
-            fill="url(#colorUv)"
+            fill="#a32d28"
+            stroke="#ff0a00"
+            fillOpacity={this.props.scene - 0.2}
             {...this.props.axis[0]}
             dot={{
-              stroke: 'red',
+              stroke: 'yellow',
               strokeWidth: 2
             }}
           />
@@ -90,12 +80,12 @@ class Chart extends Component {
             strokeDasharray={`${$line2Length}`}
             strokeDashoffset={`${($line2Length) - (($line2Length) * this.props.scene)}`}
             type="monotone"
-            stroke="green"
-            fillOpacity={this.props.scene}
-            fill="url(#colorPv)"
+            stroke="#121212"
+            fill="#2e2e2e"
+            fillOpacity={this.props.scene - 0.2}
             {...this.props.axis[1]}
             dot={{
-              stroke: 'yellow',
+              stroke: 'black',
               strokeWidth: 2
             }}
           />

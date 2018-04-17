@@ -106,7 +106,7 @@ class Main extends Component {
             <div className="col-md shrink">
               <div className="header__btns">
                 <button
-                  data-wenk="نسبة الميل للحبس هي نسبة المتهمين الذين قررت النيابة حبسهم احتياطيًا مرة على اﻷقل"
+                  data-wenk="نسبة المتهمين الذين قررت النيابة حبسهم احتياطيًا مرة على اﻷقل"
                   data-wenk-pos="right"
                   onClick={this.setTab(1)}
                   className={this.state.tab === 1 ? 'is-active' : ''}
