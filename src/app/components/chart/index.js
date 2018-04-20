@@ -20,7 +20,7 @@ class Chart extends Component {
     const timer = setInterval(() => {
       if (this.state.scene < 1) {
         this.setState({
-          scene: this.state.scene + 0.02
+          scene: this.state.scene + 0.015
         });
       } else clearInterval(timer);
     }, 100);
@@ -81,7 +81,7 @@ class Chart extends Component {
             strokeDashoffset={`${$line1Length - ($line1Length * this.state.scene)}`}
             type="monotone"
             fill="#A31C27"
-            stroke="#ff0a00"
+            stroke="#A31C27"
             fillOpacity={this.state.scene}
             {...this.props.axis[0]}
             dot={{
@@ -96,7 +96,7 @@ class Chart extends Component {
             strokeDashoffset={`${($line2Length) - (($line2Length) * this.state.scene)}`}
             type="monotone"
             stroke="#121212"
-            fill="#2D2D2D"
+            fill="#121212"
             fillOpacity={this.state.scene}
             {...this.props.axis[1]}
             dot={{
