@@ -3,6 +3,10 @@ import {map, addIndex} from 'ramda';
 import {AreaChart, Area, YAxis, XAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 class Chart extends Component {
+  state = {
+    scene: 0.01
+  }
+
   getAreachart = el => {
     if (!el || !el.container) return;
 
@@ -12,16 +16,27 @@ class Chart extends Component {
     this.$line2Length = lengths[1];
   }
 
+  componentDidMount() {
+    const timer = setInterval(() => {
+      if (this.state.scene < 1) {
+        this.setState({
+          scene: this.state.scene + 0.02
+        });
+      } else clearInterval(timer);
+    }, 100);
+  }
+
   render() {
-    const {width, height} = this.props;
     const $line1Length = this.$line1Length || 10000;
     const $line2Length = this.$line2Length || 10000;
 
     return (
-      <div style={{margin: '0 10px 10px 10px', direction: 'ltr'}}>
+      <div
+        style={{margin: '0 10px 10px 10px', direction: 'ltr'}}
+      >
         <AreaChart
-          width={width}
-          height={height}
+          width={window.innerWidth - 40}
+          height={window.innerHeight - 20}
           data={this.props.data}
           ref={this.getAreachart}
         >
@@ -63,11 +78,11 @@ class Chart extends Component {
           <Area
             isAnimationActive={false}
             strokeDasharray={`${$line1Length}`}
-            strokeDashoffset={`${$line1Length - ($line1Length * this.props.scene)}`}
+            strokeDashoffset={`${$line1Length - ($line1Length * this.state.scene)}`}
             type="monotone"
-            fill="#a32d28"
+            fill="#A31C27"
             stroke="#ff0a00"
-            fillOpacity={this.props.scene - 0.2}
+            fillOpacity={this.state.scene}
             {...this.props.axis[0]}
             dot={{
               stroke: 'yellow',
@@ -78,11 +93,11 @@ class Chart extends Component {
           <Area
             isAnimationActive={false}
             strokeDasharray={`${$line2Length}`}
-            strokeDashoffset={`${($line2Length) - (($line2Length) * this.props.scene)}`}
+            strokeDashoffset={`${($line2Length) - (($line2Length) * this.state.scene)}`}
             type="monotone"
             stroke="#121212"
-            fill="#2e2e2e"
-            fillOpacity={this.props.scene - 0.2}
+            fill="#2D2D2D"
+            fillOpacity={this.state.scene}
             {...this.props.axis[1]}
             dot={{
               stroke: 'black',
