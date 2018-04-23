@@ -95,12 +95,12 @@ class Chart extends Component {
             strokeDasharray={`${$line2Length}`}
             strokeDashoffset={`${($line2Length) - (($line2Length) * this.state.scene)}`}
             type="monotone"
-            stroke="#121212"
-            fill="#121212"
+            stroke="#292929"
+            fill="#292929"
             fillOpacity={this.state.scene}
             {...this.props.axis[1]}
             dot={{
-              stroke: 'black',
+              stroke: '#121212',
               strokeWidth: 2
             }}
           />
